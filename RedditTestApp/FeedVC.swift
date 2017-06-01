@@ -11,21 +11,18 @@ import UIKit
 class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     var currentPosts = [PostModel]()
     var imageCache = [String:Data]()
     var refreshControl: UIRefreshControl!
-
-    
-    let limitPosts = 50
-    
+    let limit = limitTopPosts
     var isLoadingNextPosts:Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.title = "Top \(limitPosts) posts"
+        self.title = "Top \(limit) posts"
         automaticallyAdjustsScrollViewInsets = false
         
         refreshControl = UIRefreshControl()
@@ -35,7 +32,7 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                                  for:UIControlEvents.valueChanged)
         collectionView.addSubview(refreshControl)
         
-        getNextPosts()
+        getPosts()
     }
     
     func displayLoading() {
@@ -64,28 +61,23 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         hideLoading()
     }
     
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
     // MARK:- GET POSTS
-
-    func getNextPosts() {
-            self.displayLoading()
-            ServiceData.sharedInstance.getNextTopPost(noItems:limitPosts){(posts: [PostModel]?, error: NSError?) -> () in
-                if (error == nil) {
-                    if (!posts!.isEmpty) {
-                        self.currentPosts = posts! + self.currentPosts
-                    }
-                    DispatchQueue.main.async {
-                        self.isLoadingNextPosts = false
-                        self.collectionView.reloadData()
-                    }
+    
+    func getPosts() {
+        self.displayLoading()
+        ServiceData.sharedInstance.getTopPost(noItems:limit){(posts: [PostModel]?, error: NSError?) -> () in
+            if (error == nil) {
+                if (!posts!.isEmpty) {
+                    self.currentPosts = posts! + self.currentPosts
+                }
+                DispatchQueue.main.async {
+                    self.isLoadingNextPosts = false
+                    self.collectionView.reloadData()
                 }
             }
+        }
         
     }
-    
     
     // MARK:- SEGUE
     
@@ -102,8 +94,8 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
             vc.selectedPost = self.currentPosts[sender as! Int]
         }
     }
- 
-    //MA
+    
+    //MARK:- UICollectionViewDataSource
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -134,10 +126,7 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                 URLSession.shared.dataTask(with: URL(string: post.thumbnailURL!)!, completionHandler: { (data, response, error) in
                     if error == nil {
                         if let cellToUpdate = self.collectionView?.cellForItem(at: indexPath) as? PostCell {
-                            // store in cache
-                            self.imageCache.updateValue(data!, forKey: post.thumbnailURL!) //store in cache
-                            
-                            // update thumbnail image
+                            self.imageCache.updateValue(data!, forKey: post.thumbnailURL!)
                             DispatchQueue.main.async {
                                 cellToUpdate.postImageView.image = UIImage(data: data!)
                                 cellToUpdate.postImageView.isHidden = false
@@ -146,7 +135,6 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
                             }
                         }
                     } else {
-                        //in case of error
                         cell.postImageView!.image = nil
                     }
                 }) .resume()
@@ -159,12 +147,11 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         } else {
             cell.postImageView!.image = nil
         }
-        
-        
         cell.layer.borderWidth = 1
-        
         return cell
     }
+    
+    //MARK:- UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
@@ -176,6 +163,10 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
             return CGSize(width: (UIScreen.main.bounds.width-2)/3,height: UIScreen.main.bounds.height/3);
         }
     }
-
+    
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
 }
 

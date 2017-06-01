@@ -73,8 +73,8 @@ open class ServiceData : NSObject {
     }
 
 
-    open func getNextTopPost(noItems: Int, completion: @escaping (_ posts: [PostModel]?, _ error: NSError?) -> Void) -> Void  {
-        wsSearchTopStories(limit: noItems){(returnedData: Data?, error: NSError?) -> () in
+    open func getTopPost(noItems: Int, completion: @escaping (_ posts: [PostModel]?, _ error: NSError?) -> Void) -> Void  {
+        sortingTopPosts(limit: noItems){(returnedData: Data?, error: NSError?) -> () in
             if (error == nil) {
                 var postArray = [PostModel]()
                 postArray = try! self.downloadPostToFeed(returnedData)
@@ -85,7 +85,7 @@ open class ServiceData : NSObject {
         }
     }
     
-    func wsSearchTopStories(limit:Int?, completion: @escaping (_ result: Data?, _ error: NSError?) -> Void)  {
+    func sortingTopPosts(limit:Int?, completion: @escaping (_ result: Data?, _ error: NSError?) -> Void)  {
         if dataTask != nil {
             dataTask?.cancel()
         }

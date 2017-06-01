@@ -9,6 +9,7 @@
 import UIKit
 
 class FullVC: UIViewController {
+    
     var selectedPost : PostModel!
     var url: URL?
     var isGIF : Bool?
@@ -17,12 +18,10 @@ class FullVC: UIViewController {
     @IBOutlet weak var indicatorLoading: UIActivityIndicatorView!
     
     @IBAction func saveImageInLibrary(_ sender: UIBarButtonItem) {
-        
         UIImageWriteToSavedPhotosAlbum(postImageFull.image!, self, #selector(self.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
     }
-    
-    
-    // MARK:- Save in Gallery
+
+    // MARK:- Save Image
     
     func imageSaved(_ image: UIImage!, didFinishSavingWithError error: NSError?, contextInfo: AnyObject?) {
         self.indicatorLoading.stopAnimating()
@@ -41,8 +40,8 @@ class FullVC: UIViewController {
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,8 +65,8 @@ class FullVC: UIViewController {
                         }
                     }
                 } else {
-                    let alertController = UIAlertController(title: NSLocalizedString("ERROR",comment:""), message: "\(error!.localizedDescription)", preferredStyle: .alert)
-                    let goBackAction = UIAlertAction(title: NSLocalizedString("GO_BACK",comment:""), style: .default) { (action) in
+                    let alertController = UIAlertController(title: NSLocalizedString("Error",comment:""), message: "\(error!.localizedDescription)", preferredStyle: .alert)
+                    let goBackAction = UIAlertAction(title: NSLocalizedString("Back",comment:""), style: .destructive) { (action) in
                         DispatchQueue.main.async {
                             self.dismiss(animated: true, completion: nil)
                         }
@@ -87,22 +86,21 @@ class FullVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         
         if isGIF == true {
-        if UIApplication.shared.canOpenURL(url!) == false {
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-            //If you want handle the completion block than
-            UIApplication.shared.open(url!, options: [:], completionHandler: { (success) in
-                let alertController = UIAlertController(title: NSLocalizedString("ERROR",comment:""), message: NSLocalizedString("ERROR_OPENING_GIF",comment:""), preferredStyle: .alert)
-                let goBackAction = UIAlertAction(title: NSLocalizedString("OK",comment:""), style: .default) { (action) in
-                    self.dismiss(animated: true, completion: nil)
-                }
-                alertController.addAction(goBackAction)
-                self.present(alertController, animated: true, completion: nil)
-            })
-        }
+            if UIApplication.shared.canOpenURL(url!) == false {
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(url!, options: [:], completionHandler: { (success) in
+                    let alertController = UIAlertController(title: NSLocalizedString("Error",comment:""), message: NSLocalizedString("Error opening Gif",comment:""), preferredStyle: .alert)
+                    let goBackAction = UIAlertAction(title: NSLocalizedString("Ok",comment:""), style: .default) { (action) in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    alertController.addAction(goBackAction)
+                    self.present(alertController, animated: true, completion: nil)
+                })
+            }
         }
         
     }
-
+    
 }
 
 extension String {

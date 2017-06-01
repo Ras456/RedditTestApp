@@ -12,3 +12,5 @@ typealias ComleationToGetPosts = (_ posts: [PostModel]?, _ error: NSError?) -> V
 typealias CompletionToLimitPosts = (_ result: Data?, _ error: NSError?) -> Void
 
 let DEFAULT_URL_TOP_REDDIT = "https://www.reddit.com/top/.json?"
+
+let limitTopPosts = 50
