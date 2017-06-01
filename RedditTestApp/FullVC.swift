@@ -58,8 +58,6 @@ class FullVC: UIViewController {
                     if data != nil {
                         self.postImageFull.contentMode = UIViewContentMode.scaleAspectFit
                         self.postImageFull.clipsToBounds = true
-                        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(FullVC.imageTapped(_:)))
-                        self.postImageFull.addGestureRecognizer(tapGesture)
                         self.postImageFull.isUserInteractionEnabled = true
                         
                         DispatchQueue.main.async {
@@ -89,44 +87,20 @@ class FullVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         
         if isGIF == true {
-            if (UIApplication.shared.openURL(url!) == false) {
+        if UIApplication.shared.canOpenURL(url!) == false {
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            //If you want handle the completion block than
+            UIApplication.shared.open(url!, options: [:], completionHandler: { (success) in
                 let alertController = UIAlertController(title: NSLocalizedString("ERROR",comment:""), message: NSLocalizedString("ERROR_OPENING_GIF",comment:""), preferredStyle: .alert)
                 let goBackAction = UIAlertAction(title: NSLocalizedString("OK",comment:""), style: .default) { (action) in
                     self.dismiss(animated: true, completion: nil)
                 }
                 alertController.addAction(goBackAction)
                 self.present(alertController, animated: true, completion: nil)
-            } else {
-                self.dismiss(animated: false, completion: nil)
-            }
-            
+            })
         }
-    }
-    
-    // MARK:- ImageTap
-    
-    func imageTapped(_ gesture: UIGestureRecognizer) {
-        if let imageView = gesture.view as? UIImageView {
-            let alertController = UIAlertController(title: NSLocalizedString("WHAT_TO_DO",comment:""), message: nil, preferredStyle: .actionSheet)
-            
-            let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL",comment:""), style: .cancel) { (action) in
-                // do nothing...
-            }
-            let goBackAction = UIAlertAction(title: NSLocalizedString("GO_BACK",comment:""), style: .destructive) { (action) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            let saveInGalleryAction = UIAlertAction(title: NSLocalizedString("GALLERY_SAVE",comment:""), style: .default) { (action) in
-                alertController.dismiss(animated: true, completion: nil)
-                self.indicatorLoading.startAnimating()
-                UIImageWriteToSavedPhotosAlbum(imageView.image!, self, #selector(self.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
-            }
-            
-            alertController.addAction(cancelAction)
-            alertController.addAction(goBackAction)
-            alertController.addAction(saveInGalleryAction)
-            
-            self.present(alertController, animated: true, completion: nil)
         }
+        
     }
 
 }
