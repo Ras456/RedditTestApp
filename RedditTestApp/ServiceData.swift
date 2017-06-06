@@ -25,7 +25,7 @@ open class ServiceData : NSObject {
         var countCommentsPost: Int!
         var createdPost: Date!
         do {
-            let json = try JSONSerialization.jsonObject(with: responseData!, options:JSONSerialization.ReadingOptions(rawValue:0)) as! [String:Any]
+            let json = try JSONSerialization.jsonObject(with: responseData!, options:JSONSerialization.ReadingOptions()) as! [String:Any]
             if let data = json["data"] as? [String: Any] {
                 if let children = data["children"] as? [[String: Any]], children.count > 0 {
                     for i in 0..<children.count {

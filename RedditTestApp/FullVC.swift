@@ -13,6 +13,7 @@ class FullVC: UIViewController {
     var selectedPost : PostModel!
     var url: URL?
     var isGIF : Bool?
+    var image: UIImage!
     
     @IBOutlet weak var postImageFull: UIImageView!
     @IBOutlet weak var indicatorLoading: UIActivityIndicatorView!

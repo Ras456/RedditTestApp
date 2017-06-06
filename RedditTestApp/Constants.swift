@@ -10,6 +10,7 @@ import Foundation
 
 typealias ComleationToGetPosts = (_ posts: [PostModel]?, _ error: NSError?) -> Void
 typealias CompletionToLimitPosts = (_ result: Data?, _ error: NSError?) -> Void
+typealias DownloadComplete = () -> ()
 
 let DEFAULT_URL_TOP_REDDIT = "https://www.reddit.com/top/.json?"
 

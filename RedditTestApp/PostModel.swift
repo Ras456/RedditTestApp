@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 open class PostModel {
     var name: String!
@@ -18,6 +19,7 @@ open class PostModel {
     var countComments: Int!
     var images = [String]()
     
+    
     init(name: String!, auth: String!, created: Date!, countComments: Int!, thumbnailURL: String!, title: String!, imageUrl: [String]!) {
         self.author = auth
         self.countComments = countComments
@@ -27,4 +29,5 @@ open class PostModel {
         self.images = imageUrl
         self.title = title
     }
+    
 }

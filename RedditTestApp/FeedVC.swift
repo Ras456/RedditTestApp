@@ -111,6 +111,9 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostCellIdentifier",for:indexPath) as! PostCell
         let post = self.currentPosts[indexPath.row]
         cell.configureCell(post)
+        
+        
+        
         cell.postImageView.tag = indexPath.row
         
         cell.postImageView.clipsToBounds = true
@@ -119,41 +122,17 @@ class FeedVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollection
         cell.postImageView.isUserInteractionEnabled = true
         cell.postImageView.tag = indexPath.row
         cell.postImageView.isHidden = true
-        
-        if (post.thumbnailURL != nil && post.thumbnailURL! != "" && post.thumbnailURL! != "self" && post.thumbnailURL! != "default") {
-            if (imageCache[post.thumbnailURL!] == nil) {
-                
-                URLSession.shared.dataTask(with: URL(string: post.thumbnailURL!)!, completionHandler: { (data, response, error) in
-                    if error == nil {
-                        if let cellToUpdate = self.collectionView?.cellForItem(at: indexPath) as? PostCell {
-                            self.imageCache.updateValue(data!, forKey: post.thumbnailURL!)
-                            DispatchQueue.main.async {
-                                cellToUpdate.postImageView.image = UIImage(data: data!)
-                                cellToUpdate.postImageView.isHidden = false
-                                cellToUpdate.setNeedsLayout()
-                                cellToUpdate.layoutIfNeeded()
-                            }
-                        }
-                    } else {
-                        cell.postImageView!.image = nil
-                    }
-                }) .resume()
-            } else {
-                cell.postImageView!.image = UIImage(data: imageCache[post.thumbnailURL!]!)
-                cell.postImageView.isHidden = false
-                cell.postImageView.setNeedsLayout()
-                cell.postImageView.layoutIfNeeded()
-            }
-        } else {
-            cell.postImageView!.image = nil
-        }
         cell.layer.borderWidth = 1
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
         return cell
     }
     
     //MARK:- UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+        
+       
     {
         if UIScreen.main.bounds.height > UIScreen.main.bounds.width {
             // portrait

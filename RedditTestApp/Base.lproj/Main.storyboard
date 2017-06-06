@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,37 +33,36 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCellIdentifier" id="RdY-mF-zxe" customClass="PostCell" customModule="RedditTestApp" customModuleProvider="target">
-                                        <rect key="frame" x="12.5" y="0.0" width="350" height="100"/>
+                                        <rect key="frame" x="13" y="0.0" width="350" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="351" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GbW-El-6tm">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="GbW-El-6tm" secondAttribute="height" multiplier="1:1" id="WYu-Cc-BPC"/>
                                                         <constraint firstAttribute="width" constant="100" id="fxc-5U-mfw"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="jMW-pK-Mc6">
                                                     <rect key="frame" x="105" y="0.0" width="240" height="100"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-Gu-i0S">
-                                                            <rect key="frame" x="0.0" y="0.0" width="240" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-Gu-i0S">
+                                                            <rect key="frame" x="0.0" y="0.0" width="240" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ghu-m0-eCL">
-                                                            <rect key="frame" x="100" y="20.5" width="140" height="26.5"/>
+                                                            <rect key="frame" x="100" y="21" width="140" height="26.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <color key="shadowColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCd-o5-65p">
-                                                            <rect key="frame" x="100" y="47" width="140" height="26.5"/>
+                                                            <rect key="frame" x="100" y="47.5" width="140" height="26"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -98,11 +96,13 @@
                                         <color key="backgroundColor" red="0.31131541473591423" green="0.80392158030000005" blue="0.79310148596545238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="GbW-El-6tm" firstAttribute="leading" secondItem="RdY-mF-zxe" secondAttribute="leadingMargin" constant="-8" id="8X9-MF-Fi5"/>
+                                            <constraint firstItem="GbW-El-6tm" firstAttribute="top" secondItem="jMW-pK-Mc6" secondAttribute="top" id="WsN-XV-kNQ"/>
                                             <constraint firstAttribute="trailing" secondItem="jMW-pK-Mc6" secondAttribute="trailing" constant="5" id="XEu-rz-bRN"/>
                                             <constraint firstItem="GbW-El-6tm" firstAttribute="centerY" secondItem="RdY-mF-zxe" secondAttribute="centerY" id="p8j-8v-24N"/>
                                             <constraint firstItem="jMW-pK-Mc6" firstAttribute="top" secondItem="RdY-mF-zxe" secondAttribute="top" id="pnm-DM-ZaP"/>
                                             <constraint firstAttribute="bottom" secondItem="jMW-pK-Mc6" secondAttribute="bottom" id="uOv-Y9-zlA"/>
                                             <constraint firstItem="jMW-pK-Mc6" firstAttribute="leading" secondItem="GbW-El-6tm" secondAttribute="trailing" constant="5" id="wze-hh-vxB"/>
+                                            <constraint firstItem="GbW-El-6tm" firstAttribute="leading" secondItem="RdY-mF-zxe" secondAttribute="leadingMargin" constant="-8" id="yjf-RF-1ac"/>
                                         </constraints>
                                         <size key="customSize" width="350" height="100"/>
                                         <connections>
